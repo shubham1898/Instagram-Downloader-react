@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import fetch from 'node-fetch'
+import './post.css'
 
 
 // debugger;
@@ -84,18 +85,22 @@ fetchData=async siteUrl =>{
       
         return(
             <div>
-                <div>
+                <div className="search">
                 <input name='shubham' type="text" value={this.state.userName} onChange={this.handlechange} ></input>
             {/* {  this.props.sendData(this.state.userName)} */}
             <button type='submit' onClick={this.fetchDataid}>Submit</button>
                 </div>
+                <div className="listImg">
              {this.state.edge.map(node=>{if(node.node.is_video===false)
-             return <div>
-            <img  onClick={()=>this.forceDownload(node.node.display_url,"gawer")} src={node.node.display_url} alt=""></img>
+             return <div >
+            <img className="img" onClick={()=>this.forceDownload(node.node.display_url,"gawer")} src={node.node.display_url} alt=""></img>
             </div>
-             return <video onClick={()=>this.forceDownload(node.node.video_url,"gawer")} class="tWeCl"   controls  >
+            if(node.node.is_video===true)
+             return <video className="vdo" onClick={()=>this.forceDownload(node.node.video_url,"gawer")}    controls  >
              <source await src={node.node.video_url} type="video/mp4" ></source></video>
+             return <div>The result will be displayed here</div>
              })}
+             </div>
             </div>
         )
     }

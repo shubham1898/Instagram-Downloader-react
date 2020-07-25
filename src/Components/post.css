@@ -1,0 +1,30 @@
+.listImg{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.img{
+    width:30vw;
+    height:30vw;
+    
+}
+.vdo{
+    width:30vw;
+    height:30vw;
+}
+.search{
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    margin-bottom: 10vh;
+    justify-content: center;
+}
+.center{
+    display: grid;
+       grid-template-rows: 2fr 1fr;
+       text-align: center;
+       align-items: center;
+}
+.header{
+    margin-bottom: 30px;
+}
