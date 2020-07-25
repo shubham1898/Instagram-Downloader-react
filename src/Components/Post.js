@@ -4,16 +4,29 @@ import fetch from 'node-fetch'
 
 // debugger;
 class Post extends Component{
-constructor(){
-    super()
+constructor(props){
+    super(props)
     this.state={
-        edge:[ ]
+        edge:[{
+            node:{
+                display_url:''
+            }
+        } ],
+        userName:'',
+        id:""
     }
 }
+//4179440085
     
-    
+    // componentWillReceiveProps(){
+    //     this.setState({
+    //         id:this.props.id
+    //     })
+    //     this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.props.id+'%22,%22first%22:60,%22after%22:null}');
+
+    // }
     componentDidMount() {
-    this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%224179440085%22,%22first%22:60,%22after%22:null}');
+    this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.state.id+'%22,%22first%22:60,%22after%22:null}');
   }
 fetchData=async siteUrl =>{
     try{
@@ -30,17 +43,59 @@ fetchData=async siteUrl =>{
         // console.log(error)
 
     }}
-
+    forceDownload(url, fileName){
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function(){
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(this.response);
+            var tag = document.createElement('a');
+            tag.href = imageUrl;
+            tag.download = fileName;
+            document.body.appendChild(tag);
+            tag.click();
+            document.body.removeChild(tag);
+        }
+        xhr.send();
+    }
+    handlechange=(event)=>{
+        this.setState({
+            userName:event.target.value
+        })
+    }
+    fetchDataid=async () =>{
+        try{
+            let siteUrl='https://www.instagram.com/'+this.state.userName+'/?__a=1'
+            let response=await fetch(siteUrl);
+            let json=await response.json();
+            //  this.props.sendData(json.graphql.user.id)
+            this.setState({
+                edge:[],
+                id:json.graphql.user.id
+            })
+            this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.state.id+'%22,%22first%22:60,%22after%22:null}');
+        }catch(error){
+            console.log(error)
+        }
+    }
     render(){
   
       
         return(
             <div>
-             {/* <img src={`${this.state.edge[2].node.display_url}` } alt=""></img>  */}
-             {/* {this.state.edge[1].node} */}
-             {this.state.edge.map(node=>(
-            <div><img src={node.node.display_url} alt=""></img></div>
-             ))}
+                <div>
+                <input name='shubham' type="text" value={this.state.userName} onChange={this.handlechange} ></input>
+            {/* {  this.props.sendData(this.state.userName)} */}
+            <button type='submit' onClick={this.fetchDataid}>Submit</button>
+                </div>
+             {this.state.edge.map(node=>{if(node.node.is_video===false)
+             return <div>
+            <img  onClick={()=>this.forceDownload(node.node.display_url,"gawer")} src={node.node.display_url} alt=""></img>
+            </div>
+             return <video onClick={()=>this.forceDownload(node.node.video_url,"gawer")} class="tWeCl"   controls  >
+             <source await src={node.node.video_url} type="video/mp4" ></source></video>
+             })}
             </div>
         )
     }
