@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Components/Header'
-import SearchBar from './Components/SearchBar'
+// import SearchBar from './Components/SearchBar'
 import Post from './Components/Post'
 import Footer from './Components/Footer'
 
