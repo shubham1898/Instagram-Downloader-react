@@ -28,3 +28,15 @@
 .header{
     margin-bottom: 30px;
 }
+.buttonNext{
+  
+   
+    background-color: rgb(250, 206, 233);
+    color: rgb(29, 27, 27);
+    border: 1px solid black;
+}
+.centerButton{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
