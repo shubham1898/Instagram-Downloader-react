@@ -40,3 +40,20 @@
     align-items: center;
     justify-content: center;
 }
+@media only screen and (max-width: 600px) {
+  .listImg{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.img{
+    width:50vw;
+    height:50vw;
+    
+}
+.vdo{
+    width:50vw;
+    height:50vw;
+}
+
+}

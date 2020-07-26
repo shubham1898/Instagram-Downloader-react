@@ -1,10 +1,12 @@
 body{
-    background-color: rgb(203, 184, 238);
+    background-color: rgb(179, 255, 195);
     
 }
 .buttonNext{
-    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
     margin-top:10vh ;
+    height:25px
 }
 h1{
     font-family: Arial, Helvetica, sans-serif;

@@ -18,7 +18,8 @@ class Post extends Component {
             userName: '',
             id: "",
             next:null,
-            isNextPage:false
+            isNextPage:false,
+            isprivate:false
         }
         nothing = <h4> </h4>
     }
@@ -95,13 +96,14 @@ class Post extends Component {
 
 // }
     render() {
-        nothing = (this.state.id === '') ? <h4 className="center">Search Something</h4> : <div> </div>
+        nothing = (this.state.id === '') ? <h4 className="center">Search Something Example : cristiano</h4> : <div> </div>
         if(this.state.isNextPage===true){
            nextButton=<button className="buttonNext" onClick={()=>this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:"'+this.state.next+'"}')} type='submit'>click to see next 50 posts</button>
         }else nextButton=<button className="buttonNext" disabled='true' type='reset'>No More Post!!!! Thank You</button>
         return (
             <div>
                 {/* search bar */}
+                <div className="center">Click on the images to download !!!</div>
                 <div className="search">
                     <input name='shubham' placeholder="username" type="text" value={this.state.userName} onChange={this.handlechange} ></input>
 
