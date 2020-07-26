@@ -21,5 +21,5 @@ Now you can download all the Photos and Videos of an Instagram User.No Restricti
 Feel free to contribute to any improvement
 
 # Notes
-1. User profile must be public
+1. User account must be public
 2. Unlimited access to Photos and videos of an IG user

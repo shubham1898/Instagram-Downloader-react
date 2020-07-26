@@ -6,6 +6,7 @@ import './post.css'
 // debugger;
 let nothing;
 let nextButton;
+let isprivate;
 class Post extends Component {
     constructor(props) {
         super(props)
@@ -84,7 +85,8 @@ class Post extends Component {
             //  this.props.sendData(json.graphql.user.id)
             this.setState({
                 edge: [],
-                id: json.graphql.user.id
+                id: json.graphql.user.id,
+                isprivate:json.graphql.user.is_private
             })
             this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:null}');
         } catch (error) {
@@ -96,6 +98,7 @@ class Post extends Component {
 
 // }
     render() {
+        isprivate=(this.state.isprivate===true)? <h2 className='center'>Sorry the User account is private</h2>:<div></div>
         nothing = (this.state.id === '') ? <h4 className="center">Search Something Example : cristiano</h4> : <div> </div>
         if(this.state.isNextPage===true){
            nextButton=<button className="buttonNext" onClick={()=>this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:"'+this.state.next+'"}')} type='submit'>click to see next 50 posts</button>
@@ -126,6 +129,7 @@ class Post extends Component {
                 {/* footer */}
                 <div>
                     {nothing}
+                    {isprivate}
                 </div>
                 <div className="centerButton">
                {nextButton}
