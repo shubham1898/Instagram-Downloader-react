@@ -125,8 +125,8 @@ this.refs.video.load();
                                 <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
                             </div>
                         if (node.node.is_video === true)
-                            return <video ref={'video} className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
-                                <source ref={'source'} await src={node.node.video_url} type="video/mp4" ></source></video>
+                            return <video ref='video' className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
+                                <source ref='source' await src={node.node.video_url} type="video/mp4" ></source></video>
                         return <div> </div>
                     })}
                 </div>
