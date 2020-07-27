@@ -33,6 +33,10 @@ class Post extends Component {
     //     this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.props.id+'%22,%22first%22:60,%22after%22:null}');
 
     // }
+    componentWillUnmount(){
+this.refs.source.src='';
+this.refs.video.load();
+}
     componentDidMount() {
         this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:'+this.state.next+'}');
 
@@ -121,8 +125,8 @@ class Post extends Component {
                                 <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
                             </div>
                         if (node.node.is_video === true)
-                            return <video className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
-                                <source await src={node.node.video_url} type="video/mp4" ></source></video>
+                            return <video ref={'video} className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
+                                <source ref={'source'} await src={node.node.video_url} type="video/mp4" ></source></video>
                         return <div> </div>
                     })}
                 </div>
