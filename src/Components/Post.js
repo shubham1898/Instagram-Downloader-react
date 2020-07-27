@@ -32,6 +32,21 @@ class Post extends Component {
         }
     }
     //4179440085
+<<<<<<< HEAD
+=======
+
+    // componentWillReceiveProps(){
+    //     this.setState({
+    //         id:this.props.id
+    //     })
+    //     this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.props.id+'%22,%22first%22:60,%22after%22:null}');
+
+    // }
+    componentWillUnmount(){
+this.refs.source.src='';
+this.refs.video.load();
+}
+>>>>>>> 654164b439689c26b9ff55a1a8c55e7141403144
     componentDidMount() {
         this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:' + this.state.next + '}');
 
@@ -155,9 +170,15 @@ class Post extends Component {
                         <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
                         </div>
                         if (node.node.is_video === true)
+<<<<<<< HEAD
                         return <video key={index} poster={node.node.display_url} preload='none' className="vdo"  controls  >
                         <source  src={node.node.video_url} type="video/mp4" ></source></video>
                         return <div key={index}> </div>
+=======
+                            return <video ref='video' className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
+                                <source ref='source' await src={node.node.video_url} type="video/mp4" ></source></video>
+                        return <div> </div>
+>>>>>>> 654164b439689c26b9ff55a1a8c55e7141403144
                     })}
                 </div>
                 {/* footer */}
@@ -173,5 +194,33 @@ class Post extends Component {
         )
     }
 }
+<<<<<<< HEAD
 /* <button className="buttonNext" disabled='true' type='reset'>No More Post!!!! Thank You</button> */
 export default Post;
+=======
+
+// function
+/* {  this.props.sendData(this.state.userName)} */
+
+
+
+// let extractData=async ()=>{
+//    let json1= await fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%224179440085%22,%22first%22:60,%22after%22:null}')
+//        let arr=await json1;
+//        return arr
+// }
+
+//    async function Post (){
+//     let json1= await fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%224179440085%22,%22first%22:60,%22after%22:null}')
+// console.log(typeof json1)
+
+//         return (
+//         <div>
+//          {json1}
+//         </div>
+//         )
+
+// }
+
+export default Post;
+>>>>>>> 654164b439689c26b9ff55a1a8c55e7141403144
