@@ -57,3 +57,20 @@
 }
 
 }
+@media only screen and (max-width: 400px) {
+  .listImg{
+    display:grid;
+    grid-template-columns: 1fr;
+}
+
+.img{
+    width:98vw;
+    height:98vw;
+    
+}
+.vdo{
+    width:98vw;
+    height:98vw;
+}
+
+}
