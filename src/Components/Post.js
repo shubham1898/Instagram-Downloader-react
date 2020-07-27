@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import fetch from 'node-fetch'
 import './post.css'
+import Header from './Header'
+import ClearCache from 'react-clear-cache'
 
 
 // debugger;
@@ -18,39 +20,37 @@ class Post extends Component {
             }],
             userName: '',
             id: "",
-            next:null,
-            isNextPage:false,
-            isprivate:false
+            next: null,
+            isNextPage: false,
+            isprivate:false,
+            postCount:0,
+            fullName:'',
+            profilePic:'',
+            bio:'',
+            postPerPage:'20'
+
         }
-        nothing = <h4> </h4>
     }
     //4179440085
-
-    // componentWillReceiveProps(){
-    //     this.setState({
-    //         id:this.props.id
-    //     })
-    //     this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22'+this.props.id+'%22,%22first%22:60,%22after%22:null}');
-
-    // }
     componentDidMount() {
-        this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:'+this.state.next+'}');
+        this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:' + this.state.next + '}');
 
     }
     fetchData = async siteUrl => {
         try {
             let response = await fetch(siteUrl);
             let json = await response.json();
-            console.log(json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url);
+            // console.log(json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url);
             //    console.log(response);
             //    return json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url
             //    return response;
-            this.setState({
-                edge: json.data.user.edge_owner_to_timeline_media.edges,
-                next:json.data.user.edge_owner_to_timeline_media.page_info.end_cursor,
-                isNextPage:json.data.user.edge_owner_to_timeline_media.page_info.has_next_page
-                
-            })
+            let edgeN=await json.data.user.edge_owner_to_timeline_media.edges
+            setTimeout(this.setState({
+                edge:edgeN,
+                next: json.data.user.edge_owner_to_timeline_media.page_info.end_cursor,
+                isNextPage: json.data.user.edge_owner_to_timeline_media.page_info.has_next_page
+
+            }),3000)
         } catch (error) {
             // console.log(error)
 
@@ -77,6 +77,11 @@ class Post extends Component {
             userName: event.target.value
         })
     }
+    changePostPerPage=(event)=>{
+        this.setState({
+            postPerPage:event.target.value
+        })
+    }
     fetchDataid = async () => {
         try {
             let siteUrl = 'https://www.instagram.com/' + this.state.userName + '/?__a=1'
@@ -84,46 +89,75 @@ class Post extends Component {
             let json = await response.json();
             //  this.props.sendData(json.graphql.user.id)
             this.setState({
-                edge: [],
                 id: json.graphql.user.id,
-                isprivate:json.graphql.user.is_private
+                isprivate: json.graphql.user.is_private,
+                profilePic :json.graphql.user.profile_pic_url,
+                fullName : json.graphql.user.full_name,
+                bio : json.graphql.user.biography,
+                postCount :json.graphql.user.edge_owner_to_timeline_media.count
             })
-            this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:null}');
+            this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+Number(this.state.postPerPage)+',%22after%22:null}');
         } catch (error) {
             console.log(error)
         }
     }
-// giveNext=async ()=>{
-//     this.componentDidMount()
 
-// }
     render() {
-        isprivate=(this.state.isprivate===true)? <h2 className='center'>Sorry the User account is private</h2>:<div></div>
+
+        isprivate = (this.state.isprivate === true) ? <h2 className='center'>Sorry the User account is private</h2> : <div></div>
         nothing = (this.state.id === '') ? <h4 className="center">Search Something Example : cristiano</h4> : <div> </div>
-        if(this.state.isNextPage===true){
-           nextButton=<button className="buttonNext" onClick={()=>this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:60,%22after%22:"'+this.state.next+'"}')} type='submit'>click to see next 50 posts</button>
-        }else nextButton=<button className="buttonNext" disabled='true' type='reset'>No More Post!!!! Thank You</button>
+        if (this.state.isNextPage === true) {
+            nextButton = <button className="buttonNext" onClick={() => this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+ Number(this.state.postPerPage)+',%22after%22:"' + this.state.next + '"}')} type='submit'>click to see next 50 posts</button>
+        } else nextButton = <div className='buttonNext'>No more Post !! Thanks</div>
+
+
         return (
             <div>
+                 <ClearCache>
+        {({ isLatestVersion, emptyCacheStorage }) => (
+          <div>
+            {!isLatestVersion && (
+              <p>
+                <a
+                  href="www.google.com"
+                  onClick={e => {
+                    e.preventDefault();
+                    emptyCacheStorage();
+                  }}
+                >
+                  Update version
+                </a>
+              </p>
+            )}
+          </div>
+        )}
+      </ClearCache>
+                <Header pic={this.state.profilePic} post={this.state.postCount} bio={this.state.bio} name={this.state.fullName}/>
                 {/* search bar */}
                 <div className="center">Click on the images to download !!!</div>
                 <div className="search">
                     <input name='shubham' placeholder="username" type="text" value={this.state.userName} onChange={this.handlechange} ></input>
-
+                    <select defaultValue='30' value={this.state.value} onChange={this.changePostPerPage}>
+                        <option value='2'>2</option>
+                        <option value='20'>20</option>
+                        <option  value='30'>30</option>
+                        <option value='50'>50</option>
+                    </select>
                     <button className="userName" type='submit' onClick={this.fetchDataid}>Submit</button>
                 </div>
+
                 {/* result section */}
 
                 <div className="listImg">
-                    {this.state.edge.map(node => {
+                    {this.state.edge.map((node,index) => {
                         if (node.node.is_video === false)
-                            return <div >
-                                <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
-                            </div>
+                        return <div key={index} >
+                        <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
+                        </div>
                         if (node.node.is_video === true)
-                            return <video className="vdo" onClick={() => this.forceDownload(node.node.video_url, "gawer")} controls  >
-                                <source await src={node.node.video_url} type="video/mp4" ></source></video>
-                        return <div> </div>
+                        return <video key={index} poster={node.node.display_url} preload='none' className="vdo"  controls  >
+                        <source  src={node.node.video_url} type="video/mp4" ></source></video>
+                        return <div key={index}> </div>
                     })}
                 </div>
                 {/* footer */}
@@ -132,35 +166,12 @@ class Post extends Component {
                     {isprivate}
                 </div>
                 <div className="centerButton">
-               {nextButton}
+                    {nextButton}
                 </div>
-               
+
             </div>
         )
     }
 }
-
-// function
-/* {  this.props.sendData(this.state.userName)} */
-
-
-
-// let extractData=async ()=>{
-//    let json1= await fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%224179440085%22,%22first%22:60,%22after%22:null}')
-//        let arr=await json1;
-//        return arr
-// }
-
-//    async function Post (){
-//     let json1= await fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%224179440085%22,%22first%22:60,%22after%22:null}')
-// console.log(typeof json1)
-
-//         return (
-//         <div>
-//          {json1}
-//         </div>
-//         )
-
-// }
-
+/* <button className="buttonNext" disabled='true' type='reset'>No More Post!!!! Thank You</button> */
 export default Post;

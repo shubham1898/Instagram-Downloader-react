@@ -12,6 +12,7 @@ h1{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
     margin-bottom: 0;
+    align-self: center;
 }
 h5{
     margin-top: 20px;
