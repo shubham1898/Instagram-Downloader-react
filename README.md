@@ -10,7 +10,7 @@ Now you can download all the Photos and Videos of an Instagram User.No Restricti
 5. open your web bowser and search localhost:3000
 
 ## Online
-  Just click http://instagram-downloader1.herokuapp.com/
+  Just click https://instagram-downloader1.herokuapp.com/
 
 # Demo
 ![Home Page](public/page1n.png)
