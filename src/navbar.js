@@ -47,7 +47,7 @@ class navbar extends Component {
                 
                 
                 
-                  <div class="nav-link nav-item active" onClick={this.toggleSearch} style={style1}>Search Username</div>
+                  <a class="nav-link nav-item active" onClick={this.toggleSearch} style={style1}>Search Username</a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  <span class="navbar-toggler-icon"></span>  </button>
 
               <div class="collapse navbar-collapse" id="navbarNav">
