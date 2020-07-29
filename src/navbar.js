@@ -46,13 +46,15 @@ class navbar extends Component {
             
               
                 
-                  <div class="navbar-nav nav-item nav-link" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
                 
                 
-                  <div class="navbar-nav nav-item nav-link" onClick={this.toggleSearch} style={style1}>Search Username</div>
+                  <div class="nav-item nav-link" onClick={this.toggleSearch} style={style1}>Search Username</div>
                 
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav">  
+                 <li class="nav-item">
+                    <div class="nav-link" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
+                  </li>
                   <li class="nav-item">
                   <div class="nav-link" onClick={this.toggleContact} style={style1} >Contacts</div>
                 </li>
