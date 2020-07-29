@@ -13,10 +13,11 @@ Now you can download all the Photos and Videos of an Instagram User.No Restricti
   Just click http://instagram-downloader1.herokuapp.com/
 
 # Demo
-![Home Page](public/page1.png)
-![search Home](public/page2.png)
-![result Page](public/page3.png)
-![result Page](public/page4.png)
+![Home Page](public/page1n.png)
+![search Home](public/page2n.png)
+![result Page](public/page3n.png)
+![result Page](public/page4n.png)
+![Search Page](public/page5.png)
 # Info
 Feel free to contribute to any improvement
 
