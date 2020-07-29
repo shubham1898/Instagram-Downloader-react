@@ -48,11 +48,11 @@ class Post extends Component {
             //    return response;
             let edgeN=await json.data.user.edge_owner_to_timeline_media.edges
             setTimeout(this.setState({
-                edge:edgeN,
+                edge:[...this.state.edge,...edgeN],
                 next: json.data.user.edge_owner_to_timeline_media.page_info.end_cursor,
                 isNextPage: json.data.user.edge_owner_to_timeline_media.page_info.has_next_page
 
-            }),3000)
+            }),1000)
            
         } catch (error) {
             // console.log(error)
@@ -103,6 +103,7 @@ class Post extends Component {
             this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+Number(this.state.postPerPage)+',%22after%22:null}');
         } catch (error) {
             console.log(error)
+            alert('No Such User Found !!! Please Check username again')
         }
     }
     videoLoadAgain(){
@@ -120,8 +121,8 @@ class Post extends Component {
         isprivate = (this.state.isprivate === true) ? <h2 className='center'>Sorry the User account is private</h2> : <div></div>
         nothing = (this.state.id === '') ? <h4 className="center">Search Something Example : cristiano</h4> : <div> </div>
         if (this.state.isNextPage === true) {
-            nextButton = <button className="buttonNext"  onClick={async() =>{this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+ Number(this.state.postPerPage)+',%22after%22:"' + this.state.next + '"}')}} type='submit'>click to see next {this.state.postPerPage} posts</button>
-        } else nextButton = <div className='buttonNext'>No more Post !! Thanks</div>
+            nextButton = <button className="buttonNext btn btn-dark mb-1"  onClick={async() =>{this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+ Number(this.state.postPerPage)+',%22after%22:"' + this.state.next + '"}')}} type='submit'>click to see next {this.state.postPerPage} posts</button>
+        } else nextButton = <div className='buttonNext btn btn-dark'>No more Post !! Thanks</div>
 
 
         return (
@@ -148,6 +149,7 @@ class Post extends Component {
                 <Header pic={this.state.profilePic} post={this.state.postCount} bio={this.state.bio} name={this.state.fullName}/>
                 {/* search bar */}
                 <div className="center">Click on the images to download !!!</div>
+                <div id='insta-link-target' aria-label={`https://www.instagram.com/${this.state.userName}`}></div>
                 <div className="search">
                     <input name='shubham' placeholder="username" type="text" value={this.state.userName} onChange={this.handlechange} ></input>
                     <select defaultValue='30' value={this.state.value} onChange={this.changePostPerPage}>
@@ -156,7 +158,7 @@ class Post extends Component {
                         <option  value='30'>30</option>
                         <option value='50'>50</option>
                     </select>
-                    <button className="userName" type='submit' onClick={this.fetchDataid}>Submit</button>
+                    <button className="userName btn btn-dark btn-sm ml-3" type='submit' onClick={this.fetchDataid}>Submit</button>
                 </div>
 
                 {/* result section */}
@@ -170,12 +172,12 @@ class Post extends Component {
                         if (node.node.is_video === true)
                         return <video  ref={'video'} key={index} poster={node.node.display_url} preload='none' className="vdo"  controls  >
                         <source  ref={'source'}  src={node.node.video_url} type="video/mp4" ></source></video>
-                        return <div key={index}> </div>
+                        return null
                     })}
                 </div>
                 {/* footer */}
                 <div>
-                 {this.videoLoadAgain()}
+                 {/* {this.videoLoadAgain()} */}
                     {nothing}
                     {isprivate}
                 </div>
