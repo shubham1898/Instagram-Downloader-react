@@ -44,19 +44,20 @@ class navbar extends Component {
               Instagram</a>
            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  <span class="navbar-toggler-icon"></span>  </button>
             
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <div class="nav-link" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
-                </li>
-                <li class="nav-item">
-                  <div class="nav-link" onClick={this.toggleSearch} style={style1}>Search Username</div>
-                </li>
-                         <div class="collapse navbar-collapse" id="navbarNav">
-                <li class="nav-item">
+              
+                
+                  <div class="navbar-nav nav-item nav-link" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
+                
+                
+                  <div class="navbar-nav nav-item nav-link" onClick={this.toggleSearch} style={style1}>Search Username</div>
+                
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
                   <div class="nav-link" onClick={this.toggleContact} style={style1} >Contacts</div>
-                </li></div>
+                </li>
               </ul>
-            
+            </div>
           </nav>
         )
     }
