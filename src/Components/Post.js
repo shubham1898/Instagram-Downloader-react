@@ -182,7 +182,7 @@ class Post extends Component {
                         <option  value='30'>30</option>
                         <option value='50'>50</option>
                     </select>
-                    <button className="userName btn btn-dark btn-sm ml-3" type='submit' onClick={this.fetchDataid}>Submit</button>
+                    <button className="userName btn btn-dark btn-sm ml-3" type='submit' onClick={this.fetchDataid}>Start</button>
                 </div>
 
                 {/* result section */}

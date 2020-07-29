@@ -40,20 +40,15 @@ class navbar extends Component {
             <a class="navbar-brand" href={this.getLink()}>
             {/* <img src="" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"></img> */}
             {/* <svg class="bi bi-chevron-right" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"/></svg> */}
-            <i class="fa fa-instagram mr-3" aria-hidden="true"></i>
+             <i class="fa fa-instagram mr-3" aria-hidden="true"></i>
               Instagram</a>
-            
-              
-                
-                
-                
-                  <a class="nav-link active" onClick={this.toggleSearch} style={style1}>Search Username</a>
+                  <div class="navbar-nav  text-white" onClick={this.toggleSearch} style={style1}>Search Username</div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  <span class="navbar-toggler-icon"></span>  </button>
 
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">  
+                 <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav">  
                  <li class="nav-item">
-                    <div class="nav-link active" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
+                 <div class="nav-link active" onClick={this.toggleHome} style={style1} >Home <span class="sr-only">(current)</span></div>
                   </li>
                   <li class="nav-item">
                   <div class="nav-link active" onClick={this.toggleContact} style={style1} >Contacts</div>

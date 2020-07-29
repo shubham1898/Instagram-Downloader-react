@@ -34,10 +34,10 @@ export default class SearchBar extends Component {
         return (
            <div>
                <div className="mb-3">
-               <input name='shubham' type="text" value={this.state.searchName} onChange={this.handlechange} ></input>
-               <button className="btn btn-dark p-0 ml-2  btn-md" type='submit' onClick={this.fetchData}>Submit</button>
-</div>
-               <table class="table">
+               <input placeholder='Enter search term' name='shubham' type="text" value={this.state.searchName} onChange={this.handlechange} ></input>
+               <button className="btn btn-dark p-0 ml-2  btn-md" type='submit' onClick={this.fetchData}>Search</button>
+               </div>
+  <table class="table">
   <thead class="thead-dark">
     <tr> 
       <th scope="col">S.no</th>
@@ -47,17 +47,17 @@ export default class SearchBar extends Component {
     </tr>
   </thead>
   <tbody>
-    {this.state.userName.map((user,index)=>( <tr>
+      {this.state.userName.map((user,index)=>(
+      <tr>
         <th scope="row">{index+1}</th>
         <td>{user.user.full_name}</td>
         <td>{user.user.username}</td>
         <td><img src={user.user.profile_pic_url} alt='not available'></img></td>
-      </tr>
-    ))}
-
-  </tbody>
-</table>
-           </div>
+       </tr>
+      ))}
+   </tbody>
+  </table>
+  </div>
         )
     }
 }
