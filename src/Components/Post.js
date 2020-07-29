@@ -59,6 +59,30 @@ class Post extends Component {
 
         }
     }
+    fetchDataFirst = async siteUrl => {
+        try {
+            this.setState({
+                edge:[]
+            })
+            let response = await fetch(siteUrl);
+            let json = await response.json();
+            // console.log(json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url);
+            //    console.log(response);
+            //    return json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url
+            //    return response;
+            let edgeN=await json.data.user.edge_owner_to_timeline_media.edges
+            setTimeout(this.setState({
+                edge:[...this.state.edge,...edgeN],
+                next: json.data.user.edge_owner_to_timeline_media.page_info.end_cursor,
+                isNextPage: json.data.user.edge_owner_to_timeline_media.page_info.has_next_page
+
+            }),1000)
+           
+        } catch (error) {
+            // console.log(error)
+
+        }
+    }
     forceDownload(url, fileName) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
@@ -100,7 +124,7 @@ class Post extends Component {
                 bio : json.graphql.user.biography,
                 postCount :json.graphql.user.edge_owner_to_timeline_media.count
             })
-            this.fetchData('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+Number(this.state.postPerPage)+',%22after%22:null}');
+            this.fetchDataFirst('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+Number(this.state.postPerPage)+',%22after%22:null}');
         } catch (error) {
             console.log(error)
             alert('No Such User Found !!! Please Check username again')
