@@ -12,7 +12,9 @@
 /build
 
 # misc
+
 .DS_Store
+.wwe.js
 .env.local
 .env.development.local
 .env.test.local

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
+import axios from 'axios'
 import './post.css'
 import Header from './Header'
 import ClearCache from 'react-clear-cache'
+
 
 
 // debugger;
@@ -40,12 +42,20 @@ class Post extends Component {
 }
     fetchData = async siteUrl => {
         try {
-            let response = await fetch(siteUrl);
-            let json = await response.json();
+           
+            let response= await axios.get(siteUrl,{crossdomain:true})
+            let json=await response.data
+           
+            // let response = await fetch(siteUrl);
+            // let json = await response.json();
+            
+            
             // console.log(json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url);
             //    console.log(response);
             //    return json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url
             //    return response;
+           
+           
             let edgeN=await json.data.user.edge_owner_to_timeline_media.edges
             setTimeout(this.setState({
                 edge:[...this.state.edge,...edgeN],
@@ -64,12 +74,21 @@ class Post extends Component {
             this.setState({
                 edge:[]
             })
-            let response = await fetch(siteUrl);
-            let json = await response.json();
+            let response= await axios.get(siteUrl,{crossdomain:true})
+            let json=await response.data
+            
+            // let response = await fetch(siteUrl,
+            //     { headers:{ 'Access-Control-Allow-Origin': '*' }
+            // });
+            // let json = await response.json();
+            
+            
             // console.log(json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url);
             //    console.log(response);
             //    return json.data.user.edge_owner_to_timeline_media.edges[1].node.display_url
             //    return response;
+            
+            
             let edgeN=await json.data.user.edge_owner_to_timeline_media.edges
             setTimeout(this.setState({
                 edge:[...this.state.edge,...edgeN],
@@ -112,9 +131,13 @@ class Post extends Component {
     }
     fetchDataid = async () => {
         try {
-            let siteUrl = 'https://www.instagram.com/' + this.state.userName + '/?__a=1'
-            let response = await fetch(siteUrl);
-            let json = await response.json();
+            let siteUrl = `https://www.instagram.com/${this.state.userName}/?__a=1`
+            
+            let response= await axios.get(siteUrl,{crossdomain:true})
+            let json=await response.data
+            // let response = await fetch(siteUrl);
+            // let json = await response.json();
+            
             //  this.props.sendData(json.graphql.user.id)
             this.setState({
                 id: json.graphql.user.id,
@@ -127,6 +150,7 @@ class Post extends Component {
             this.fetchDataFirst('https://www.instagram.com/graphql/query/?query_hash=44efc15d3c13342d02df0b5a9fa3d33f&variables={%22id%22:%22' + this.state.id + '%22,%22first%22:'+Number(this.state.postPerPage)+',%22after%22:null}');
         } catch (error) {
             console.log(error)
+            console.log('djjfjf')
             alert('No Such User Found !!! Please Check username again')
         }
     }
@@ -191,7 +215,7 @@ class Post extends Component {
                     {this.state.edge.map((node,index) => {
                         if (node.node.is_video === false)
                         return <div key={index} >
-                        <img className="img" onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
+                        <img className="img"  onClick={() => this.forceDownload(node.node.display_url, "gawer")} src={node.node.display_url} alt=""></img>
                         </div>
                         if (node.node.is_video === true)
                         return <video  ref={'video'} key={index} poster={node.node.display_url} preload='none' className="vdo"  controls  >
